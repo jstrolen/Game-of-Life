@@ -15,11 +15,13 @@ DONE:
   MultiThreading
   
   Generation count
+  
+  Mouse click dead/alive change
+  
+  Dead cells shown
 
 TODO:
 -----
-
-  Mouse click dead/alive change
 
   Refactoring
 

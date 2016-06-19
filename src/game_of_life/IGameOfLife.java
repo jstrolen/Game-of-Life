@@ -22,9 +22,13 @@ public interface IGameOfLife {
 
     void setPoint(int x, int y, boolean value);
 
+    void switchPoint(int x, int y);
+
     int getGeneration();
 
     ICondition getCondition();
 
     boolean[][] getMap();
+
+    boolean[][] getUsedCells();
 }

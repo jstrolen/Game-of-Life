@@ -11,9 +11,11 @@ class Settings {
     static final int INIT_WINDOW_HEIGHT = 800;
 
     static final boolean INIT_SHOW_GRID = true;
+    static final boolean INIT_SHOW_USED_CELLS = true;
     static final Color INIT_ALIVE_COLOR = Color.BLUE;
     static final Color INIT_DEAD_COLOR = Color.WHITE;
     static final Color INIT_GRID_COLOR = Color.DARK_GRAY;
+    static final Color INIT_USED_CELL_COLOR = Color.PINK;
 
     static final int MIN_SPEED = 1;
     static final int MAX_SPEED = 501;

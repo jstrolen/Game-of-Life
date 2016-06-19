@@ -5,11 +5,15 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by Josef Stroleny
  */
 public class GameOfLife implements IGameOfLife, Runnable {
 	private boolean[][] map;
+	private boolean[][] usedCells;
+
 	private boolean[][] hlpMap;
 	private ICondition condition;
 	private final Random random;
@@ -27,6 +31,7 @@ public class GameOfLife implements IGameOfLife, Runnable {
 
 	@Override
 	public void nextStep() {
+		stop = false;
 		this.index = 0;
 		this.maxIndex = this.map.length * this.map[0].length;
 		hlpMap = new boolean[map.length][map[0].length];
@@ -43,8 +48,10 @@ public class GameOfLife implements IGameOfLife, Runnable {
 				threads[i].join();
 			} catch (Exception e) {}
 		}
-		nextGeneration();
-		this.map = hlpMap;
+		if (!stop) {
+			nextGeneration();
+			this.map = hlpMap;
+		}
 	}
 
 	private synchronized int getWork() {
@@ -61,9 +68,15 @@ public class GameOfLife implements IGameOfLife, Runnable {
 			int y = index / this.map[0].length;
 			int neighbours = countNeighbours(x, y);
 			if (map[y][x]) {
-				hlpMap[y][x] = condition.isSurvive(neighbours);
+				if (condition.isSurvive(neighbours)) {
+					hlpMap[y][x] = true;
+					usedCells[y][x] = true;
+				}
 			} else {
-				hlpMap[y][x] = condition.isBorn(neighbours);
+				if (condition.isBorn(neighbours)) {
+					hlpMap[y][x] = true;
+					usedCells[y][x] = true;
+				}
 			}
 		}
 	}
@@ -104,6 +117,10 @@ public class GameOfLife implements IGameOfLife, Runnable {
 		if (timer != null) {
 			timer.cancel();
 			timer = null;
+
+			try {
+				sleep(50);
+			} catch (Exception e) { e.printStackTrace(); }
 		}
 	}
 
@@ -153,8 +170,27 @@ public class GameOfLife implements IGameOfLife, Runnable {
 	@Override
 	public void setPoint(int x, int y, boolean value) {
 		if (map.length > y) {
-			if (map[y].length > x) map[y][x] = value;
+			if (map[y].length > x) {
+				map[y][x] = value;
+				if (value) usedCells[y][x] = true;
+			}
 		}
+	}
+
+	@Override
+	public void switchPoint(int x, int y) {
+		if (map.length > y) {
+			if (map[y].length > x) {
+				boolean inversedValue = !map[y][x];
+				map[y][x] = inversedValue;
+				if (inversedValue) usedCells[y][x] = true;
+			}
+		}
+	}
+
+	@Override
+	public boolean[][] getUsedCells() {
+		return usedCells;
 	}
 
 	@Override
@@ -168,6 +204,8 @@ public class GameOfLife implements IGameOfLife, Runnable {
 	}
 
 	private void restartGenerations() {
+		int width = map[0].length;
+		usedCells = new boolean[map.length][width];
 		generation = 0;
 	}
 
