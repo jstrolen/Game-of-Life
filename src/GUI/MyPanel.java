@@ -23,7 +23,9 @@ class MyPanel extends JPanel {
 	private Timer timer;
 	private int speed;
 
-	MyPanel() {
+	private JLabel generation;
+
+	MyPanel(JLabel generation) {
 		this.game = new GameOfLife();
 		this.game.getCondition().setSurvive(Settings.INIT_SURVIVE);
 		this.game.getCondition().setBorn(Settings.INIT_BORN);
@@ -33,27 +35,35 @@ class MyPanel extends JPanel {
 		this.deadColor = Settings.INIT_DEAD_COLOR;
 		this.aliveColor = Settings.INIT_ALIVE_COLOR;
 		this.gridColor = Settings.INIT_GRID_COLOR;
+		this.generation = generation;
 
 		random();
 	}
 
 	void start() {
 		stop();
+		game.start(speed);
 		timer = new Timer();
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				game.nextStep();
 				redraw();
 			}
-		}, 0, speed);
+		}, 0, 1000 / Settings.FPS);
 	}
 
 	void stop() {
+		game.stop();
+
 		if (timer != null) {
 			timer.cancel();
 			timer = null;
 		}
+	}
+
+	void setSpeed(int speed) {
+		this.speed = speed;
+		start();
 	}
 
 	void step() {
@@ -98,21 +108,8 @@ class MyPanel extends JPanel {
 				g.drawLine(x * partWidth, 0, x * partWidth, this.getHeight());
 			}
 		}
+		generation.setText("" + game.getGeneration());
 	}
-
-	void setSpeed(int speed) {
-		this.speed = speed;
-		if (timer != null) start();
-	}
-
-	IGameOfLife getGame() {
-		return game;
-	}
-
-	int getSpeed() {
-		return this.speed;
-	}
-
 
 	void setGameSize(int width, int height) {
 		stop();
@@ -137,5 +134,13 @@ class MyPanel extends JPanel {
 		stop();
 		game.fill();
 		redraw();
+	}
+
+	IGameOfLife getGame() {
+		return game;
+	}
+
+	int getSpeed() {
+		return this.speed;
 	}
 }

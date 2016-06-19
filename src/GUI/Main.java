@@ -27,9 +27,10 @@ class Main extends JFrame {
 	private void init() {
 		JPanel main = new JPanel();
 		main.setLayout(new GridLayout(0, 2));
-		MyPanel myPanel = new MyPanel();
+		JLabel generation = new JLabel();
+		MyPanel myPanel = new MyPanel(generation);
 		main.add(myPanel);
-		main.add(new SettingsPanel(myPanel));
+		main.add(new SettingsPanel(myPanel, generation));
 		
 		this.add(main);
 	}

@@ -18,6 +18,7 @@ class Settings {
     static final int MIN_SPEED = 1;
     static final int MAX_SPEED = 501;
     static final int INIT_SPEED = 50;
+    static final int FPS = 30;
 
     static final int MIN_WIDTH = 1;
     static final int MAX_WIDTH = 401;

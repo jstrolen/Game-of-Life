@@ -4,6 +4,9 @@ package game_of_life;
  * Created by Josef Stroleny
  */
 public interface IGameOfLife {
+    void start(int speed);
+
+    void stop();
 
     void nextStep();
 
@@ -18,8 +21,6 @@ public interface IGameOfLife {
     void setMap(boolean[][] map);
 
     void setPoint(int x, int y, boolean value);
-
-    void setCondition(Condition condition);
 
     int getGeneration();
 

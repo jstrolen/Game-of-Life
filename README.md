@@ -1,25 +1,29 @@
 # Game-of-Life
+-----
 
 Simple Java Game of Life
 
 DONE:
+-----
 
-Basic functionality
+  Basic functionality
 
-GUI
+  GUI
 
-Settings
+  Settings
+  
+  MultiThreading
+  
+  Generation count
 
 TODO:
+-----
 
-Mouse click dead/alive change
+  Mouse click dead/alive change
 
-Generation count
+  Refactoring
 
-Refactoring
+  More settings options
 
-More settings options
+  Patterns
 
-Patterns
-
-Performance

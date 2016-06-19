@@ -10,7 +10,7 @@ class SettingsPanel extends JPanel {
 	private static final long serialVersionUID = -1624527071656166845L;
 	private final MyPanel myPanel;
 
-	SettingsPanel(MyPanel myPanel) {
+	SettingsPanel(MyPanel myPanel, JLabel generation) {
 		super();
 		this.myPanel = myPanel;
 		this.setLayout(new GridLayout(0, 1));
@@ -118,6 +118,7 @@ class SettingsPanel extends JPanel {
 
 		
 		//SPEED
+		label = new JLabel("Speed: ");
 		JSlider speed = new JSlider(Settings.MIN_SPEED, Settings.MAX_SPEED, myPanel.getSpeed());
 		speed.setBackground(Color.WHITE);
 		speed.setMajorTickSpacing(100);
@@ -128,7 +129,16 @@ class SettingsPanel extends JPanel {
 		size.add(height);
 		hlpPanel = new JPanel();
 		hlpPanel.setBackground(Color.WHITE);
+		hlpPanel.add(label);
 		hlpPanel.add(speed);
+		this.add(hlpPanel);
+
+		//GENERATION
+		label = new JLabel("Generation: ");
+		hlpPanel = new JPanel();
+		hlpPanel.setBackground(Color.WHITE);
+		hlpPanel.add(label);
+		hlpPanel.add(generation);
 		this.add(hlpPanel);
 		
 		//CONTROLLERS

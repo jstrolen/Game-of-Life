@@ -4,7 +4,6 @@ package game_of_life;
  * Created by Josef Stroleny
  */
 public interface ICondition {
-
     void setBorn(int[] born);
 
     void setSurvive(int[] survive);

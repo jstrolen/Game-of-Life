@@ -1,4 +1,4 @@
-package game_of_life;
+package GUI;
 
 /**
  * Created by Josef Stroleny
